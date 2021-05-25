@@ -1,34 +1,43 @@
-// import { render } from '@testing-library/react';
 import React from 'react';
-import Forminfo from './component/Form';
+import Informationform from './components/formsinf';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import Cards from './component/Card'
+import Cardsinfo from './components/cardsinfo';
+
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data2: '',
+      display:false,
+      show:false,
+    }
+  }
+  setData = (data1,showing) => {
+    this.setState({
+      data2: data1,
+      display:showing,
+      show:true,
+    })
+    console.log(this.state.data2);
+  }
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     location: {},
-  //   }
-  // }
-  // setdata = reuslt => {
-  //   this.setState({
-  //     location: reuslt,
-  //   })
-  // }
 
   render() {
     return (
       <div>
-        <Forminfo />
-        {/* <Cards
-          sentdata1={this.state.location}
-        /> */}
+        <Informationform setData={this.setData} />
+      {this.state.show &&
+        <Cardsinfo data2={this.state.data2} display={this.state.display} />
+      }
+
+
       </div>
     )
   }
 }
-
-
 export default App;
+
+        
+      
+        
