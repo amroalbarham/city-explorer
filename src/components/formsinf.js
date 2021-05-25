@@ -35,18 +35,17 @@ class Informationform extends React.Component {
             this.props.setData(this.state.locationReslut,true);
         }
         catch(error){
+            console.log(error.response);
             this.props.setData(error,false)
         }
         try{
-            // console.log(serverRoute);
-            // console.log(this.state.newcity);
-            // console.log(this.state.locationReslut.lon);
-            // console.log(this.state.locationReslut.lat);
+           console.log(serverRoute);
             let weatherData=await axios.get(`${serverRoute}/weather?searchQuery=${this.state.newcity}&long=${this.state.locationReslut.lon}&lat=${this.state.locationReslut.lat}`);
-            this.props.setWeather(weatherData.data,true)
+            console.log(weatherData);
+            this.props.setWeather(weatherData.data,true);
         }
         catch(error){
-            console.log(error.response.data);
+            console.log(error.response);
             this.props.setWeather(error.response,false);
         }
 
