@@ -12,8 +12,8 @@ class Cardsinfo extends React.Component {
                         <Card.Body>
                             <Card.Title>{this.props.data2.display_name}</Card.Title>
                             <Card.Text>
-                                <h2>lat:</h2> {this.props.data2.lat}<br />
-                                <h2>lon:</h2> {this.props.data2.lon}
+                                lat: {this.props.data2.lat}<br />
+                                lon: {this.props.data2.lon}
 
                             </Card.Text>
 
