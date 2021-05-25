@@ -3,14 +3,19 @@ import { Form, Button } from 'react-bootstrap/';
 import axios from 'axios';
 
 
+let serverRoute = process.env.REACT_APP_SERVER;
+
+
 class Informationform extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             newcity: '',
+            locationReslut:'',
           
         }
     }
+    
     updateCity = event => {
         this.setState({
             newcity: event.target.value,
@@ -18,14 +23,31 @@ class Informationform extends React.Component {
     }
     updateform = async (event) => {
         event.preventDefault();
+
         let url = `https://eu1.locationiq.com/v1/search.php?key=pk.aa88f8f51366daa6b9549e2ef1a7466f&q=${this.state.newcity}&format=json`;
         try{
 
             let response = await axios.get(url);
-            this.props.setData(response.data[0],true);
+            this.setState({
+                locationReslut:response.data[0],
+
+            })
+            this.props.setData(this.state.locationReslut,true);
         }
         catch(error){
             this.props.setData(error,false)
+        }
+        try{
+            // console.log(serverRoute);
+            // console.log(this.state.newcity);
+            // console.log(this.state.locationReslut.lon);
+            // console.log(this.state.locationReslut.lat);
+            let weatherData=await axios.get(`${serverRoute}/weather?searchQuery=${this.state.newcity}&long=${this.state.locationReslut.lon}&lat=${this.state.locationReslut.lat}`);
+            this.props.setWeather(weatherData.data,true)
+        }
+        catch(error){
+            console.log(error.response.data);
+            this.props.setWeather(error.response,false);
         }
 
     }
@@ -35,7 +57,7 @@ class Informationform extends React.Component {
             <div>
                 <Form onSubmit={this.updateform}>
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Label>your city</Form.Label>
+                        <Form.Label><h2>City Explorer</h2></Form.Label>
                         <Form.Control type="text" placeholder="your city" onChange={this.updateCity} />
 
                     </Form.Group>
@@ -43,7 +65,7 @@ class Informationform extends React.Component {
 
 
                     <Button variant="primary" type="submit">
-                        Submit
+                        Explore
   </Button>
                 </Form>
             </div>
