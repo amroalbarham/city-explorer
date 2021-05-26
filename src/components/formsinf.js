@@ -11,11 +11,11 @@ class Informationform extends React.Component {
         super(props);
         this.state = {
             newcity: '',
-            locationReslut:'',
-          
+            locationReslut: '',
+
         }
     }
-    
+
     updateCity = event => {
         this.setState({
             newcity: event.target.value,
@@ -25,29 +25,43 @@ class Informationform extends React.Component {
         event.preventDefault();
 
         let url = `https://eu1.locationiq.com/v1/search.php?key=pk.aa88f8f51366daa6b9549e2ef1a7466f&q=${this.state.newcity}&format=json`;
-        try{
+        try {
 
             let response = await axios.get(url);
             this.setState({
-                locationReslut:response.data[0],
+                locationReslut: response.data[0],
 
             })
-            this.props.setData(this.state.locationReslut,true);
+            this.props.setData(this.state.locationReslut, true);
         }
-        catch(error){
+        catch (error) {
             console.log(error.response);
-            this.props.setData(error,false)
+            this.props.setData(error, false)
         }
-        try{
-           console.log(serverRoute);
-            let weatherData=await axios.get(`${serverRoute}/weather?searchQuery=${this.state.newcity}&long=${this.state.locationReslut.lon}&lat=${this.state.locationReslut.lat}`);
-            console.log(weatherData);
-            this.props.setWeather(weatherData.data,true);
+        try {
+            console.log(serverRoute);
+            let weatherData = await axios.get(`${serverRoute}/weather?searchQuery=${this.state.newcity}&long=${this.state.locationReslut.lon}&lat=${this.state.locationReslut.lat}`);
+            // console.log(weatherData);
+            this.props.setWeather(weatherData.data, true);
         }
-        catch(error){
+        catch (error) {
             console.log(error.response);
-            this.props.setWeather(error.response,false);
+            this.props.setWeather(error.response, false);
         }
+
+        let movieurl = `${serverRoute}/movie?searchQuery=${this.state.newcity}`;
+
+        axios
+            .get(movieurl)
+            .then(value => {
+                this.props.setmovie(value.data);
+                console.log(value.data);
+            })
+            .catch(error => {
+                console.log(error.response);
+                this.props.setmovie(error.response);
+
+            })
 
     }
 
