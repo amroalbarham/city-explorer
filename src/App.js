@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Cardsinfo from './components/cardsinfo';
 import WeatherCard from './components/weather';
 import Movie from './components/movie';
+import './App.css';
+
 
 
 class App extends React.Component {
