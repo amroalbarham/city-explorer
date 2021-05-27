@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+.cssmovie{
+  text-align: justify;
+
+  
+}
+Img{
+  width: 3px;
+}
+.MovieCard{
+  display:inline-table ;
+  width: 20%;
+  height: 130px;
+  margin: 10px 15px;
+}
+.Cssmovie{
+  height: 130px;
+  overflow:auto;
+ 
+}
+.image{
+  width: 100%;
+  height: 300px;
+}
+  
+  
+  
